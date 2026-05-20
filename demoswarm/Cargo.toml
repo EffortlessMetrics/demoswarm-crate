@@ -1,0 +1,16 @@
+[package]
+name = "demoswarm"
+version = "0.0.1"
+edition = "2024"
+rust-version = "1.85"
+description = "Crates.io reservation for the existing DemoSwarm agentic SDLC installer."
+license = "Apache-2.0"
+repository = "https://github.com/EffortlessMetrics/demo-swarm"
+homepage = "https://effortlesssteven.com/demoswarm/"
+documentation = "https://docs.rs/demoswarm"
+readme = "README.md"
+keywords = ["agents", "sdlc", "claude-code", "receipts", "devex"]
+categories = ["development-tools", "command-line-utilities"]
+
+[lib]
+path = "src/lib.rs"
