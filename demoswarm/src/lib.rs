@@ -5,6 +5,7 @@ pub mod cli;
 mod commands;
 pub mod model;
 pub mod project;
+pub mod transaction;
 
 use clap::Parser;
 use model::{CommandResult, Diagnostic, EXIT_ENVIRONMENT, EXIT_USAGE, Envelope, Severity};
