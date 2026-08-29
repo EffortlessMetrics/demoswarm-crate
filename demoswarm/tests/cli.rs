@@ -43,13 +43,7 @@ fn configure_creates_project_owned_config_once() {
     let root = temporary.path().to_str().expect("UTF-8 path");
     Command::cargo_bin("demoswarm")
         .expect("binary exists")
-        .args([
-            "--project",
-            root,
-            "configure",
-            "--platform",
-            "codex",
-        ])
+        .args(["--project", root, "configure", "--platform", "codex"])
         .assert()
         .success();
     let config_path = temporary.path().join(".demoswarm/config.toml");

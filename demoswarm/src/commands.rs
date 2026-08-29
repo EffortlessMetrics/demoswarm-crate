@@ -164,11 +164,7 @@ fn version(project: &ProjectContext, dry_run: bool) -> CommandResult {
     )
 }
 
-fn platforms(
-    project: &ProjectContext,
-    filter: &PlatformFilter,
-    dry_run: bool,
-) -> CommandResult {
+fn platforms(project: &ProjectContext, filter: &PlatformFilter, dry_run: bool) -> CommandResult {
     let requested: BTreeSet<&str> = filter.platforms.iter().map(String::as_str).collect();
     let all = detect_platforms(project.root());
     let selected: Vec<PlatformStatus> = all
@@ -271,7 +267,10 @@ fn status(project: &ProjectContext, filter: &PlatformFilter, dry_run: bool) -> C
                     legacy_paths.join(", ")
                 ),
             )
-            .with_remediation("Run `demoswarm migrate --dry-run` once migration support lands.", false),
+            .with_remediation(
+                "Run `demoswarm migrate --dry-run` once migration support lands.",
+                false,
+            ),
         );
     }
 
@@ -286,7 +285,11 @@ fn status(project: &ProjectContext, filter: &PlatformFilter, dry_run: bool) -> C
         format!(
             "Runs: {}{}",
             run_summaries.len(),
-            if runs_path.is_dir() { "" } else { " (directory absent)" }
+            if runs_path.is_dir() {
+                ""
+            } else {
+                " (directory absent)"
+            }
         ),
         format!("Legacy runtime paths: {}", legacy_paths.len()),
     ];
@@ -579,7 +582,10 @@ fn doctor(project: &ProjectContext, args: &DoctorArgs, dry_run: bool) -> Command
             "DSW-RUNS-001",
             Severity::Pass,
             ".runs",
-            format!("{} run directories parsed sufficiently for inventory.", items.len()),
+            format!(
+                "{} run directories parsed sufficiently for inventory.",
+                items.len()
+            ),
         )),
         Err(message) => diagnostics.push(Diagnostic::new(
             "DSW-RUNS-002",
@@ -699,12 +705,7 @@ fn runs_list(project: &ProjectContext, dry_run: bool) -> CommandResult {
             )
         }
         Err(message) => {
-            let diagnostic = Diagnostic::new(
-                "DSW-RUNS-002",
-                Severity::Error,
-                ".runs",
-                message,
-            );
+            let diagnostic = Diagnostic::new("DSW-RUNS-002", Severity::Error, ".runs", message);
             CommandResult::failure(
                 "runs list",
                 dry_run,
@@ -805,12 +806,7 @@ fn runs_validate(project: &ProjectContext, run_id: Option<&str>, dry_run: bool) 
         match discover_run_ids(project.root()) {
             Ok(ids) => ids,
             Err(message) => {
-                let diagnostic = Diagnostic::new(
-                    "DSW-RUNS-002",
-                    Severity::Error,
-                    ".runs",
-                    message,
-                );
+                let diagnostic = Diagnostic::new("DSW-RUNS-002", Severity::Error, ".runs", message);
                 return CommandResult::failure(
                     "runs validate",
                     dry_run,
@@ -933,13 +929,13 @@ fn runs_validate(project: &ProjectContext, run_id: Option<&str>, dry_run: bool) 
     }
 }
 
-fn unsupported(command: &str, project: &ProjectContext, dry_run: bool, message: &str) -> CommandResult {
-    let diagnostic = Diagnostic::new(
-        "DSW-COMMAND-001",
-        Severity::Error,
-        command,
-        message,
-    );
+fn unsupported(
+    command: &str,
+    project: &ProjectContext,
+    dry_run: bool,
+    message: &str,
+) -> CommandResult {
+    let diagnostic = Diagnostic::new("DSW-COMMAND-001", Severity::Error, command, message);
     CommandResult::failure(
         command,
         dry_run,
@@ -995,10 +991,11 @@ fn platform_definitions() -> Vec<PlatformStatus> {
 fn detect_platforms(project: &Path) -> Vec<PlatformStatus> {
     let mut platforms = platform_definitions();
     for platform in &mut platforms {
-        platform.executable_path = find_executable(platform.executable)
-            .map(|path| path.to_string_lossy().into_owned());
+        platform.executable_path =
+            find_executable(platform.executable).map(|path| path.to_string_lossy().into_owned());
         platform.project_markers = project_markers(project, platform.id);
-        platform.detected = platform.executable_path.is_some() || !platform.project_markers.is_empty();
+        platform.detected =
+            platform.executable_path.is_some() || !platform.project_markers.is_empty();
     }
     platforms
 }
@@ -1196,7 +1193,10 @@ fn scan_runs(project: &Path) -> Result<Vec<RunSummary>, String> {
         let manifest = read_run_manifest(&run_dir.join("run.json"));
         let (host, adapter_version, manifest_updated, legacy) = match manifest {
             Ok(Some(manifest)) => (
-                manifest.producer.as_ref().map(|producer| producer.host.clone()),
+                manifest
+                    .producer
+                    .as_ref()
+                    .map(|producer| producer.host.clone()),
                 manifest
                     .producer
                     .and_then(|producer| producer.adapter_version),
@@ -1219,8 +1219,8 @@ fn scan_runs(project: &Path) -> Result<Vec<RunSummary>, String> {
         let last_flow = last_receipt.as_ref().map(|receipt| receipt.flow.clone());
         let completion = last_receipt.as_ref().and_then(receipt_completion);
         let verification = last_receipt.as_ref().and_then(receipt_verification);
-        let receipt_updated = last_receipt
-            .and_then(|receipt| receipt.generated_at.or(receipt.completed_at));
+        let receipt_updated =
+            last_receipt.and_then(|receipt| receipt.generated_at.or(receipt.completed_at));
 
         summaries.push(RunSummary {
             run_id: id,

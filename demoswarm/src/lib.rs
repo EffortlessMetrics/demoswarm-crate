@@ -7,9 +7,7 @@ pub mod model;
 pub mod project;
 
 use clap::Parser;
-use model::{
-    CommandResult, Diagnostic, Envelope, EXIT_ENVIRONMENT, EXIT_USAGE, Severity,
-};
+use model::{CommandResult, Diagnostic, EXIT_ENVIRONMENT, EXIT_USAGE, Envelope, Severity};
 use serde_json::Value;
 use std::ffi::{OsStr, OsString};
 use std::io::{self, Write};
@@ -21,9 +19,7 @@ where
     T: Into<OsString> + Clone,
 {
     let raw: Vec<OsString> = args.into_iter().map(Into::into).collect();
-    let json_requested = raw
-        .iter()
-        .any(|argument| argument == OsStr::new("--json"));
+    let json_requested = raw.iter().any(|argument| argument == OsStr::new("--json"));
 
     let cli = match cli::Cli::try_parse_from(raw) {
         Ok(cli) => cli,

@@ -95,12 +95,22 @@ pub enum ProjectError {
 impl fmt::Display for ProjectError {
     fn fmt(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            Self::Missing(path) => write!(formatter, "project path does not exist: {}", path.display()),
+            Self::Missing(path) => {
+                write!(formatter, "project path does not exist: {}", path.display())
+            }
             Self::NotDirectory(path) => {
-                write!(formatter, "project path is not a directory: {}", path.display())
+                write!(
+                    formatter,
+                    "project path is not a directory: {}",
+                    path.display()
+                )
             }
             Self::Io(path, source) => {
-                write!(formatter, "could not inspect project path {}: {source}", path.display())
+                write!(
+                    formatter,
+                    "could not inspect project path {}: {source}",
+                    path.display()
+                )
             }
         }
     }
