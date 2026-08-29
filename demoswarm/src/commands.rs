@@ -46,7 +46,7 @@ struct PlatformConfig {
     scope: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 struct RunManifest {
     #[allow(dead_code)]
     schema_version: Value,
@@ -57,7 +57,7 @@ struct RunManifest {
     producer: Option<Producer>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 struct Producer {
     host: String,
     #[serde(default)]
