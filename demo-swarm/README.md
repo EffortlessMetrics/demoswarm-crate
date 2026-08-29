@@ -1,21 +1,18 @@
-# DemoSwarm
+# demo-swarm
 
-This crate reserves the `demo-swarm` package spelling for the existing DemoSwarm project.
+Compatibility package for the canonical [`demoswarm`](https://crates.io/crates/demoswarm)
+manager.
 
-The canonical future installer crate is `demoswarm`.
+Installing this package exposes a `demo-swarm` executable backed by the same
+library and command implementation as `demoswarm`:
 
-## Status
+```bash
+cargo install demo-swarm
+demo-swarm version
+```
 
-DemoSwarm already exists as a public EffortlessMetrics template for Claude Code and agentic SDLC workflows.
+The canonical package and executable spelling is `demoswarm`. This package exists
+so the repository-style spelling remains functional without creating a second
+installer implementation.
 
-This `0.0.1` release reserves the repository-style crate spelling while the installer surface is prepared.
-
-## Current crate surface
-
-This release intentionally exposes no production installer.
-
-Use the `demoswarm` crate as the canonical future install path.
-
-## License
-
-Licensed under the Apache License, Version 2.0.
+Licensed under Apache-2.0.
