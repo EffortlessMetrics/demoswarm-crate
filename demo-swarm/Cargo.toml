@@ -1,16 +1,27 @@
 [package]
 name = "demo-swarm"
-version = "0.0.1"
-edition = "2024"
-rust-version = "1.85"
-description = "Reserved crates.io spelling for the existing DemoSwarm agentic SDLC project."
-license = "Apache-2.0"
-repository = "https://github.com/EffortlessMetrics/demo-swarm"
-homepage = "https://effortlesssteven.com/demoswarm/"
-documentation = "https://docs.rs/demo-swarm"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+description = "Compatibility executable for the canonical demoswarm manager"
 readme = "README.md"
-keywords = ["agents", "sdlc", "claude-code", "receipts", "devex"]
+keywords = ["agents", "sdlc", "installer", "receipts", "devex"]
 categories = ["development-tools", "command-line-utilities"]
 
-[lib]
-path = "src/lib.rs"
+[[bin]]
+name = "demo-swarm"
+path = "src/main.rs"
+
+[dependencies]
+demoswarm = { version = "=0.1.0-alpha.1", path = "../demoswarm" }
+
+[lints]
+workspace = true
+
+[dev-dependencies]
+assert_cmd.workspace = true
+predicates.workspace = true

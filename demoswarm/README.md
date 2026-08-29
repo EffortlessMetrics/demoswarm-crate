@@ -1,29 +1,37 @@
-# DemoSwarm
+# demoswarm
 
-DemoSwarm is an existing EffortlessMetrics SDLC pack for Claude Code and agentic development workflows.
+The canonical DemoSwarm lifecycle and evidence-operations manager.
 
-The future `demoswarm` crate will provide an installer for setting up DemoSwarm in Claude Code and other LLM harnesses.
+`demoswarm` detects supported agent hosts, scaffolds project-owned configuration,
+reports installation and run health, and provides deterministic `.runs` inspection.
+Host-native adapters execute DemoSwarm flows; the manager does not invoke models or
+route agents.
 
-This `0.0.1` release is a crates.io reservation release.
+## Commands
 
-## Status
+```text
+demoswarm install
+demoswarm update
+demoswarm uninstall
+demoswarm status
+demoswarm diff
+demoswarm configure
+demoswarm migrate
+demoswarm doctor
+demoswarm platforms
+demoswarm runs ...
+demoswarm version
+```
 
-The installer is not published yet.
+The initial alpha implements the shared CLI/output foundation and read-only
+operational surfaces. Mutation commands that require the transaction engine fail
+with stable diagnostics rather than pretending to have changed the project.
 
-DemoSwarm already exists as a public template repository. This crate reserves the canonical install package name while the installer surface is prepared.
+## Machine output
 
-## Current crate surface
-
-This release intentionally exposes no production installer.
-
-Do not depend on `demoswarm = "0.0.1"` for automation or setup flows.
-
-## Direction
-
-The real installer should make it easy to install or update DemoSwarm assets across supported harnesses, starting with Claude Code.
-
-The installer should not hide what it writes. It should make setup explicit, reversible, and reviewable.
+Pass `--json` for a versioned, noninteractive JSON envelope. JSON is written to
+stdout; diagnostics and rendering failures use stderr and stable exit classes.
 
 ## License
 
-Licensed under the Apache License, Version 2.0.
+Apache-2.0.
